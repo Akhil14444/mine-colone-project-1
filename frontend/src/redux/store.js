@@ -16,27 +16,22 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-// Persist configuration
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["socketio"], // Prevent socketio from being persisted
 };
 
-// Combine reducers
 const rootReducer = combineReducers({
   auth: authSlice,
   post: postSlice,
-  socketio: socketSlice, // Excluded from persistence
+  socketio: socketSlice,
   chat: chatSlice,
   realTimeNotification: rtnSlice,
 });
 
-// Create persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Configure the store
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -46,5 +41,4 @@ const store = configureStore({
       },
     }),
 });
-
 export default store;
